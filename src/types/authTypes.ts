@@ -3,7 +3,7 @@ export type Admin = {
     id: string,
     username: string,
     email: string,
-    fullname: string,
+    fullName: string,
     isSuperAdmin: boolean,
 }
 

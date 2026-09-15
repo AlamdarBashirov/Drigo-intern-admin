@@ -1,0 +1,28 @@
+.sidebar{
+    position: fixed;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 100vh;
+    background-color: gray;
+
+    .sidebarContainer{
+        display: flex;
+        flex-direction: column;
+        .sidebarContent{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            a{
+                color: Black;
+                text-decoration: none;
+                font-size: 16px;
+                &:hover{
+                    color: purple;
+                }
+
+            }
+        }
+    }
+}
