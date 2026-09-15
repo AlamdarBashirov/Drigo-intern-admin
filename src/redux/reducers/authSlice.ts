@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getCurrentUser, login, logout, verifyOtp, type LoginData, type VerifyOtpData } from "../../api/authApi";
+import type { Admin, AuthState } from "../../types/authTypes";
 
 export const LoginThunk = createAsyncThunk("auth/login", async (data: LoginData) => {
     const res = await login(data)
@@ -13,6 +14,8 @@ export const VerifyOtpThunk = createAsyncThunk("auth/verify", async (data: Verif
 
 export const GetCurrentUserThunk = createAsyncThunk("auth/me", async () => {
     const res = await getCurrentUser()
+    console.log("user", res);
+    
     return res
 })
 
@@ -21,16 +24,13 @@ export const LogoutThunk = createAsyncThunk("auth/logout", async () => {
     return res
 })
 
-type AuthState = {
-    user: object | null,
-    error: string | null,
-    loading: boolean
-}
+
 
 const initialState: AuthState = {
     user: null,
     error: null,
-    loading: false
+    loading: false,
+    initialized: false
 }
 
 export const authSlice = createSlice({
@@ -43,7 +43,7 @@ export const authSlice = createSlice({
             //login thunk 
             .addCase(LoginThunk.fulfilled, (state, action) => {
                 state.loading = false
-                state.user = action.payload
+                // state.user = action.payload
                 state.error = null
             })
             .addCase(LoginThunk.pending, (state, action) => {
@@ -74,14 +74,17 @@ export const authSlice = createSlice({
                 state.loading = false
                 state.user = action.payload
                 state.error = null
+                state.initialized = true
             })
             .addCase(GetCurrentUserThunk.pending, (state, action) => {
                 state.loading = true
                 state.error = null
+                state.initialized = false
             })
             .addCase(GetCurrentUserThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || "Failed getting your profile"
+                state.initialized = true
             })
 
             //logout thunk
