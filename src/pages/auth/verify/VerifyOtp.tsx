@@ -1,14 +1,18 @@
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../../redux/store';
 import { GetCurrentUserThunk, VerifyOtpThunk } from '../../../redux/reducers/authSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { GetMyPermissionsThunk } from '../../../redux/reducers/permissionsSlice';
 
 const VerifyOtp = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();
     const location = useLocation()
     const username = location.state?.username
+
+    const {error} = useSelector((state:RootState) => state.auth)
+
     const formik = useFormik({
         initialValues: {
             code: '',
@@ -20,6 +24,7 @@ const VerifyOtp = () => {
                 await dispatch(VerifyOtpThunk(values)).unwrap()
                 console.log("ugurludur");
                 await dispatch(GetCurrentUserThunk()).unwrap()
+                await dispatch(GetMyPermissionsThunk()).unwrap();
                 navigate("/")
             } catch (error) {
                 console.log(error);
@@ -42,6 +47,7 @@ const VerifyOtp = () => {
                         />
                         <button type="submit">Verify</button>
                     </form>
+                    {error && <span>{error}</span>}
                 </div>
             </div>
         </>

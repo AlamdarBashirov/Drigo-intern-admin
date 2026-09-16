@@ -1,11 +1,12 @@
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoginThunk } from '../../../redux/reducers/authSlice';
-import type { AppDispatch } from '../../../redux/store';
+import type { AppDispatch, RootState } from '../../../redux/store';
 import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>(); 
+    const {error} = useSelector((state:RootState) => state.auth)
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -47,6 +48,7 @@ const LoginPage = () => {
                     />
                     <button type="submit">Submit</button>
                 </form>
+                {error && <span>{error}</span>}
             </div>
         </div>
     )

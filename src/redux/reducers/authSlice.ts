@@ -1,21 +1,46 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit";
 import { getCurrentUser, login, logout, verifyOtp, type LoginData, type VerifyOtpData } from "../../api/authApi";
 import type { Admin, AuthState } from "../../types/authTypes";
+import axios from "axios";
 
-export const LoginThunk = createAsyncThunk("auth/login", async (data: LoginData) => {
-    const res = await login(data)
-    return res
+export const LoginThunk = createAsyncThunk("auth/login", async (data: LoginData, { rejectWithValue }) => {
+    try {
+        const res = await login(data)
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+                return rejectWithValue("Invalid username or password");
+            }
+            if (error.response?.status === 500) {
+                return rejectWithValue("Server error");
+            }
+        }
+        return rejectWithValue("Something went wrong. Please try again.");
+    }
 })
 
-export const VerifyOtpThunk = createAsyncThunk("auth/verify", async (data: VerifyOtpData) => {
-    const res = await verifyOtp(data)
-    return res
+export const VerifyOtpThunk = createAsyncThunk("auth/verify", async (data: VerifyOtpData, {rejectWithValue}) => {
+    try {
+        const res = await verifyOtp(data)
+        return res
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            if (error.response?.status === 401) {
+                return rejectWithValue("Otp code is not correct")
+            }
+            if (error.response?.status === 500) {
+                return rejectWithValue("Server error")
+            }
+        }
+        return rejectWithValue("Something went wrong. Please try again")
+    }
 })
 
 export const GetCurrentUserThunk = createAsyncThunk("auth/me", async () => {
     const res = await getCurrentUser()
     console.log("user", res);
-    
+
     return res
 })
 
@@ -52,7 +77,7 @@ export const authSlice = createSlice({
             })
             .addCase(LoginThunk.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.error.message || "Login failed"
+                state.error = action.payload as string
             })
 
             //verify otp thunk
@@ -66,7 +91,7 @@ export const authSlice = createSlice({
             })
             .addCase(VerifyOtpThunk.rejected, (state, action) => {
                 state.loading = false
-                state.error = action.error.message || "otp verify failed"
+                state.error = action.payload as string
             })
 
             //get current user thunk
