@@ -4,6 +4,7 @@ import Router from './router/Router'
 import { useEffect } from 'react'
 import { GetCurrentUserThunk } from './redux/reducers/authSlice'
 import type { AppDispatch } from './redux/store'
+import { GetMyPermissionsThunk } from './redux/reducers/permissionsSlice'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
 
   useEffect(() => {
     dispatch(GetCurrentUserThunk())
+    dispatch(GetMyPermissionsThunk())
   }, [])
   return (
     <>

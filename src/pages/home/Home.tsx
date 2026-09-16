@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
-import type { AppDispatch } from "../../../redux/store"
-import { LogoutThunk } from "../../../redux/reducers/authSlice"
+import type { AppDispatch } from "../../redux/store"
+import { LogoutThunk } from "../../redux/reducers/authSlice"
 
 const Home = () => {
     const dispatch = useDispatch<AppDispatch>()
