@@ -1,0 +1,27 @@
+.header{
+    width: 100%;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+    background-color: gray;
+    color: #000000;
+    .headerContainer{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo{
+            h2{
+                color: purple;
+            }
+        }
+        .user_info{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
