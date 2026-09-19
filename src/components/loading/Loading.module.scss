@@ -1,0 +1,12 @@
+.loadingWrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: purple;
+    .loadingMessage{
+        font-size: 35px;
+        color: rgb(159, 95, 159);
+    }
+}
