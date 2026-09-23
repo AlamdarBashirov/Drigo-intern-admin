@@ -1,11 +1,9 @@
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styles from './SideBar.module.scss'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../redux/store'
-import Home from '../../pages/home/Home'
 const SideBar = () => {
     const { permissions } = useSelector((state: RootState) => state.permissions)
-    console.log(permissions);
     const permissionCodes = permissions?.permissionCodes
 
 

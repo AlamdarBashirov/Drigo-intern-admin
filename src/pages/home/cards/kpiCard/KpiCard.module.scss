@@ -1,0 +1,6 @@
+@use '../../../../styles/variables' as*;
+.kpiCard{
+    width: fit-content;
+    padding: $spacing-sm $spacing-md;
+    background-color: red;
+}

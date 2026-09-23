@@ -1,3 +1,4 @@
+@use '../../styles/variables' as*;
 .header{
     width: 100%;
     position: sticky;
@@ -5,9 +6,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 0;
-    background-color: gray;
-    color: #000000;
+    background-color: $color-primary;
+    padding: $spacing-sm;
+    border-bottom: 2px solid $border-color;
     .headerContainer{
         width: 90%;
         display: flex;
@@ -15,13 +16,68 @@
         justify-content: space-between;
         .logo{
             h2{
-                color: purple;
+                color: $text-on-primary;
+
             }
         }
-        .user_info{
+        .userInfo{
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: $spacing-xs;
+            list-style: none;
+            color: $text-on-primary;
+            .informationItem{
+                span{
+                    font-size: 16px;
+                    color: $text-on-primary;
+                    cursor: default;
+                    letter-spacing: 2px;
+                }
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+                &:hover{
+                    .userInfoDropdown{
+                        display: flex;
+                    }
+                }
+            }
+            .userInfoDropdown{
+                min-width: 100%;
+                display: none;
+                list-style-type: none;
+                flex-direction: column;
+                gap: $spacing-sm;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: $color-primary;
+                gap: $spacing-xs;
+                padding: $spacing-sm 0;
+                overflow: hidden;
+
+                li{
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-xs;
+                    span{
+                        font-size: 14px;
+                    }
+                }
+                .logoutBtn{
+                    background-color: transparent;
+                    border: none;
+                    text-align: start;
+                    display: flex;
+                    align-items: center;
+                    color: rgb(248, 58, 58);
+                    gap: $spacing-xs;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+
         }
     }
 }

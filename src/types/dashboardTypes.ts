@@ -15,7 +15,7 @@ export type DashboardKpis = {
     totalCars: number,
     totalDebt: number,
     //totalDebtBreakdown
-    TotalDebtBreakdown: TotalDebtBreakdown
+    totalDebtBreakdown: TotalDebtBreakdown
     totalDeliveryDrivers:number,
     totalMembers:number,
     totalRevenue: number

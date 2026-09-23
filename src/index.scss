@@ -1,9 +1,9 @@
+@use './styles/variables' as*;
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 main {
-  margin-left: 200px;
-  padding-top: 0px;
+  margin-left: $sidebar-width;
 }

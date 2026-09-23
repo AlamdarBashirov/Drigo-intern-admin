@@ -11,3 +11,46 @@ $text-primary: #1A1A1A;   // Esas metnler
 $text-secondary: #666666; // Ikinci dereceli metnler
 $text-brand: #4D21FF;     // Brand mətnlər
 $text-on-primary: #FFFFFF; // Purple background üzərində mətn
+
+// Status
+$color-success: #16A34A;
+$color-error: #DC2626;
+$color-warning: #F59E0B;
+
+$container-normal-width: 90%;
+$sidebar-width: 240px;
+$header-height: 64px;
+
+// Spacing
+//gap, margin, padding ucun
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Border Radius
+
+$radius-sm: 6px;
+$radius-md: 8px; // daxili elementler
+$radius-lg: 12px; // butov element table, modal ve s
+
+// Borders
+
+$border-color: #E5E7EB;
+$border-color-focus: #4D21FF;
+$border-color-error: #DC2626;
+
+// Shadows
+
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+// Breakpoints
+
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+$breakpoint-mobile: 576px;
+
+//sidebar
+$sidebar-width: 150px;
