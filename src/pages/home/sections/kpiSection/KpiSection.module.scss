@@ -1,0 +1,16 @@
+@use '../../../../styles/variables' as*;
+.kpiSection{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-page;
+    padding: $spacing-lg 0;
+    .kpiContainer{
+        width: $container-normal-width;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(200px, 240px));
+        justify-content: space-between;
+        row-gap: $spacing-md;
+    }
+}

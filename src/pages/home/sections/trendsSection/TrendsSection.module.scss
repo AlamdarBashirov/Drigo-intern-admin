@@ -1,0 +1,22 @@
+@use '../../../../styles/variables' as*;
+.trendsSection{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-lg 0;
+    background-color: $bg-page;
+    h2{
+        text-align: start;
+        width: 100%;
+    }
+    .trendsContainer{
+        width: $container-normal-width;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        row-gap: $spacing-lg;
+    }
+}

@@ -4,6 +4,7 @@ import { type AppDispatch, type RootState } from '../../../../redux/store'
 import { useEffect } from 'react'
 import { GetDashboardKpisThunk } from '../../../../redux/reducers/dashboardSlice'
 import KpiCard from '../../cards/kpiCard/KpiCard'
+import Loading from '../../../../components/loading/Loading'
 
 const KpiSection = () => {
 
@@ -13,8 +14,6 @@ const KpiSection = () => {
     useEffect(() => {
         dispatch(GetDashboardKpisThunk()).unwrap()
     }, [dispatch])
-
-    console.log(kpis);
 
     if (!kpis) {
         return null
@@ -116,7 +115,9 @@ const KpiSection = () => {
         },
     ];
 
-
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div className={styles.kpiSection}>

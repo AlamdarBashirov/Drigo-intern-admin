@@ -7,7 +7,7 @@ const KpiCard = ({title, value}: KpiCardProps) => {
   return (
     <div className={styles.kpiCard}>
         <div className={styles.kpiCardContainer}>
-            <h2>{title}:</h2>
+            <h4>{title}:</h4>
             <span>{value}</span>
         </div>
     </div>

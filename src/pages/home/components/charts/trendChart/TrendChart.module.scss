@@ -1,0 +1,15 @@
+@use '../../../../../styles/variables' as*;
+
+.trendChart {
+  width: 45%;
+  padding: $spacing-md;
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+
+  h3 {
+    font-size: 16px;
+    color: $text-primary;
+  }
+}

@@ -33,7 +33,7 @@ export type TrendCountItem = {
     count: number
 }
 
-type RevenueTrendItem ={
+export type RevenueTrendItem ={
     date: string,
     revenue: number
 }
