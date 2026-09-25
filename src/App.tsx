@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { GetCurrentUserThunk } from './redux/reducers/authSlice'
 import type { AppDispatch } from './redux/store'
 import { GetMyPermissionsThunk } from './redux/reducers/permissionsSlice'
+import { GetCars } from './api/carsApi'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
     dispatch(GetCurrentUserThunk())
     dispatch(GetMyPermissionsThunk())
   }, [])
+
   return (
     <>
       <Router />

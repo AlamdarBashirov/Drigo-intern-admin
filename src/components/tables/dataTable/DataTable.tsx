@@ -6,7 +6,7 @@ import styles from './DataTable.module.scss'
 // getRowKey for returns unique id/key for each table row
 
 
-type Column<T> = {
+export type Column<T> = {
     header: string;
     key: keyof T;
     render?: (item: T) => React.ReactNode;

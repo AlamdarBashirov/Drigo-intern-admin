@@ -23,5 +23,6 @@ export type PermissionsResponse = {
 export type PermissionState = {
     permissions:  PermissionsResponse | null
     loading: boolean,
-    error: string | null
+    error: string | null,
+    initialized: boolean
 }

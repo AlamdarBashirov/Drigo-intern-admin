@@ -12,7 +12,8 @@ export const GetMyPermissionsThunk = createAsyncThunk("permissions/my-permission
 const initialState: PermissionState = {
     permissions: null,
     loading: false,
-    error: null
+    error: null,
+    initialized: false
 }
 
 export const permissionsSlice = createSlice({
@@ -27,6 +28,7 @@ export const permissionsSlice = createSlice({
         state.loading = false
         state.error = null
         state.permissions = action.payload
+        state.initialized = true
     })
     .addCase(GetMyPermissionsThunk.pending, (state, action) => {
         state.loading = true
@@ -34,6 +36,7 @@ export const permissionsSlice = createSlice({
     })
     .addCase(GetMyPermissionsThunk.rejected, (state, action) => {
         state.loading = false
+        state.initialized = true
         state.error = action.error.message || "Failed to get permissions"
     })
 })
