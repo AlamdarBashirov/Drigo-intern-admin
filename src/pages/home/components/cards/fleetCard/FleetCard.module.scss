@@ -1,0 +1,16 @@
+@use '../../../../../styles/variables' as*;
+.fleetCard{
+    width: fit-content;
+    padding: $spacing-sm $spacing-md;
+    background-color: $bg-surface;
+    box-shadow: $shadow-sm;
+    border-radius: $radius-lg;
+    width: 280px;
+    .fleetCardContainer{
+        padding: $spacing-xs;
+        h4{
+            color: $text-primary;
+            font-size: 16px;
+        }
+    }
+}

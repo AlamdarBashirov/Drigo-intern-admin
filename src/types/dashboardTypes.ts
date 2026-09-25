@@ -15,7 +15,7 @@ export type DashboardKpis = {
     totalCars: number,
     totalDebt: number,
     //totalDebtBreakdown
-    TotalDebtBreakdown: TotalDebtBreakdown
+    totalDebtBreakdown: TotalDebtBreakdown
     totalDeliveryDrivers:number,
     totalMembers:number,
     totalRevenue: number
@@ -33,7 +33,7 @@ export type TrendCountItem = {
     count: number
 }
 
-type RevenueTrendItem ={
+export type RevenueTrendItem ={
     date: string,
     revenue: number
 }
@@ -46,7 +46,7 @@ export type DashboardTrends = {
 }
 
 //fleet 
-type FleetCityItem = {
+export type FleetCityItem = {
     city: string,
     count: number
 }
