@@ -5,23 +5,23 @@ import type { AppDispatch, RootState } from '../../../../redux/store'
 import { GetCarsThunk } from '../../../../redux/reducers/carsSlice'
 import DataTable, { type Column } from '../../../../components/tables/dataTable/DataTable'
 import type { CarData } from '../../../../types/carsTypes'
+import Pagination from '../../../../components/pagination/Pagination'
+import useQueryParams from '../../../../hooks/useQueryParams'
 
 const CarsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
-
     const { cars } = useSelector((state: RootState) => state.cars)
+    const { page, setPage } = useQueryParams()
 
+    const totalPages = cars ? Math.ceil(cars?.total / cars?.pageSize) : 0
     useEffect(() => {
-        // dispatch(GetCarsThunk())
         dispatch(GetCarsThunk({
-            page: 1,
-            pageSize: 20,
-            // search: "Toyota"
+            page
         }))
-    }, [])
-    
+    }, [page])
+
     const columns: Column<CarData>[] = [
-        
+
         {
             header: "ID",
             key: "id"
@@ -44,7 +44,7 @@ const CarsSection = () => {
         }
     ]
 
-    if(!cars) return null;
+    if (!cars) return null;
     return (
         <>
             <div className={styles.carsSection}>
@@ -53,6 +53,11 @@ const CarsSection = () => {
                         data={cars.data}
                         columns={columns}
                         getRowKey={(car) => car.id}
+                    />
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
                     />
                 </div>
             </div>
