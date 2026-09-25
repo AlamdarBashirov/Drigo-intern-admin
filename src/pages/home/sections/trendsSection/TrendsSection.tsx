@@ -22,9 +22,9 @@ const TrendsSection = () => {
 
     return (
         <div className={styles.trendsSection}>
-            <h2>Trends</h2>
 
             <div className={styles.trendsContainer}>
+                <h2>Trends</h2>
                 <TrendChart
                     dataKey='count'
                     title="Rental Trends"

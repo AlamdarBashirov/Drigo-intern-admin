@@ -9,7 +9,7 @@
     .kpiContainer{
         width: $container-normal-width;
         display: grid;
-        grid-template-columns: repeat(4, minmax(200px, 240px));
+        grid-template-columns: repeat(4, 1fr);
         justify-content: space-between;
         row-gap: $spacing-md;
     }

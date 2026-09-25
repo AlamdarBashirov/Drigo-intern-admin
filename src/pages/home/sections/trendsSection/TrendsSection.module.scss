@@ -7,11 +7,11 @@
     justify-content: center;
     padding: $spacing-lg 0;
     background-color: $bg-page;
-    h2{
-        text-align: start;
-        width: 100%;
-    }
     .trendsContainer{
+        h2{
+            text-align: start;
+            width: 100%;
+        }
         width: $container-normal-width;
         display: flex;
         flex-wrap: wrap;

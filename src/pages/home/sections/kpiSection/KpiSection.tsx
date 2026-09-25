@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { type AppDispatch, type RootState } from '../../../../redux/store'
 import { useEffect } from 'react'
 import { GetDashboardKpisThunk } from '../../../../redux/reducers/dashboardSlice'
-import KpiCard from '../../cards/kpiCard/KpiCard'
+import KpiCard from '../../components/cards/kpiCard/KpiCard'
 import Loading from '../../../../components/loading/Loading'
 
 const KpiSection = () => {

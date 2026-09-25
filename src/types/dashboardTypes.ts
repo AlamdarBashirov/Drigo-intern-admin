@@ -46,7 +46,7 @@ export type DashboardTrends = {
 }
 
 //fleet 
-type FleetCityItem = {
+export type FleetCityItem = {
     city: string,
     count: number
 }
