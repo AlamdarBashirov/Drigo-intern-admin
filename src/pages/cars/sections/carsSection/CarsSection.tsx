@@ -7,18 +7,22 @@ import DataTable, { type Column } from '../../../../components/tables/dataTable/
 import type { CarData } from '../../../../types/carsTypes'
 import Pagination from '../../../../components/pagination/Pagination'
 import useQueryParams from '../../../../hooks/useQueryParams'
+import SearchInput from '../../../../components/search/searchInput/SearchInput'
+import useDebounce from '../../../../hooks/useDebounce'
 
 const CarsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { cars } = useSelector((state: RootState) => state.cars)
-    const { page, setPage } = useQueryParams()
+    const { page, setPage, search, setSearch } = useQueryParams()
+    const debouncedSearch = useDebounce(search)
 
     const totalPages = cars ? Math.ceil(cars?.total / cars?.pageSize) : 0
     useEffect(() => {
         dispatch(GetCarsThunk({
-            page
+            page,
+            search: debouncedSearch
         }))
-    }, [page])
+    }, [page, debouncedSearch])
 
     const columns: Column<CarData>[] = [
 
@@ -49,6 +53,11 @@ const CarsSection = () => {
         <>
             <div className={styles.carsSection}>
                 <div className={styles.carsContainer}>
+                    <SearchInput
+                        search={search}
+                        setSearch={setSearch}
+                        placeholder='Search Cars'
+                    />
                     <DataTable
                         data={cars.data}
                         columns={columns}
