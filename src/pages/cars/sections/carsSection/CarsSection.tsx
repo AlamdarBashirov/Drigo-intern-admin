@@ -11,6 +11,7 @@ import SearchInput from '../../../../components/search/searchInput/SearchInput'
 import useDebounce from '../../../../hooks/useDebounce'
 import Empty from '../../../../components/empty/Empty'
 import FilterSelect from '../../../../components/filterAndSearch/filterSelect/FilterSelect'
+import { GetCarById } from '../../../../api/carsApi'
 
 const CarsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -75,6 +76,8 @@ const CarsSection = () => {
         }
     ]
 
+    GetCarById(40)
+
     const sortOrderOptions = [
         {
             label: "Ascending",
@@ -116,6 +119,7 @@ const CarsSection = () => {
                             data={cars.data}
                             columns={columns}
                             getRowKey={(car) => car.id}
+                            detailPath = {(car) => `/cars/${car.id}`}
                         />
                             <Pagination
                                 currentPage={page}

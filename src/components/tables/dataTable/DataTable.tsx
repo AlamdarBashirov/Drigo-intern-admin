@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styles from './DataTable.module.scss'
 
 
@@ -16,18 +17,23 @@ type DataTableProps<T> = {
     data: T[];
     columns: Column<T>[];
     getRowKey: (item: T) => string | number;
+    detailPath? :(item: T) => string
 };
 
-const DataTable = <T,>({ data, columns, getRowKey }: DataTableProps<T>) => {
+const DataTable = <T,>({ data, columns, detailPath,getRowKey }: DataTableProps<T>) => {
+    const navigate = useNavigate()
     return (
         <table>
             <thead>
                 <tr>
                     {
                         columns.map(item => (
-                            <th key={String(item.key)}>{item.header}</th>
+                            <>
+                                <th key={String(item.key)}>{item.header}</th>
+                            </>
                         ))
                     }
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -41,6 +47,9 @@ const DataTable = <T,>({ data, columns, getRowKey }: DataTableProps<T>) => {
                                     ? <td key={String(c.key)}>{c.render(item)}</td>
                                     : <td key={String(c.key)}>{String(item[c.key])}</td>
                             ))}
+                            <td>
+                                <button onClick={() => detailPath && navigate(detailPath(item))}>Details</button>
+                            </td>
                         </tr>
                     ))
                 }
