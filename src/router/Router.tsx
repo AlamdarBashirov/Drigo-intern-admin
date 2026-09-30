@@ -7,6 +7,7 @@ import AdminLayout from "../layout/adminLayout/AdminLayout"
 import PermissionRoute from "../components/permissionRoute/PermissionRoute"
 import Cars from "../pages/cars/Cars"
 import CarsDetail from "../pages/details/carsDetail/CarsDetail"
+import AddCars from "../pages/cars/addCars/AddCars"
 
 const Router = () => {
     return (
@@ -22,6 +23,9 @@ const Router = () => {
                         </Route>
                         <Route element={<PermissionRoute requiredPermission="cars.view" />}>
                             <Route path="/cars/:id" element={<CarsDetail />} />
+                        </Route>
+                        <Route element={<PermissionRoute requiredPermission="cars.create" />}>
+                            <Route path="/cars/add" element={<AddCars />} />
                         </Route>
                     </Route>
                 </Route>

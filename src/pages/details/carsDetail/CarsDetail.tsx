@@ -17,6 +17,9 @@ const CarsDetail = () => {
     useEffect(() => {
         dispatch(GetCarByIdThunk(carId))
     }, [])
+
+    console.log(car);
+    
     return (
         <>
             <div className={styles.carDetailPage}>
@@ -120,7 +123,7 @@ const CarsDetail = () => {
                                 </span>
                                 <div className={styles.featuresList}>
                                     <h5>Car Features</h5>
-                                    {car?.carFeatures.length ? (
+                                    {car?.carFeatures?.length ? (
                                         car.carFeatures.map((feature) => (
                                             <div
                                                 className={styles.featureItem}
@@ -192,7 +195,7 @@ const CarsDetail = () => {
                         <div className={styles.detailGroup}>
                             <h4>End Trip Available Cities</h4>
                             <div className={styles.detailGroupContainer}>
-                                {car?.endTripAvailableCities.length ? (
+                                {car?.endTripAvailableCities?.length ? (
                                     car.endTripAvailableCities.map((city) => (
                                         <div
                                             className={styles.cityItem}
@@ -211,7 +214,7 @@ const CarsDetail = () => {
                         <div className={styles.detailGroup}>
                             <h4>Included Parking Zones</h4>
                             <div className={styles.detailGroupContainer}>
-                                {car?.includedParkingZones.length ? (
+                                {car?.includedParkingZones?.length ? (
                                     <div className={styles.parkingZones}>
                                         {car.includedParkingZones.map((zone) => (
                                             <div
@@ -252,7 +255,7 @@ const CarsDetail = () => {
                         <div className={styles.detailGroup}>
                             <h4>Included Gas Stations</h4>
                             <div className={styles.detailGroupContainer}>
-                                {car?.includedGasStations.length ? (
+                                {car?.includedGasStations?.length ? (
                                     <div className={styles.gasStations}>
                                         {car.includedGasStations.map((station) => (
                                             <div
