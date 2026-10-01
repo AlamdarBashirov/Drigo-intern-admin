@@ -2,16 +2,15 @@ import styles from './CarsSection.module.scss'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../../../redux/store'
-import { GetCarsThunk } from '../../../../redux/reducers/carsSlice'
+import { DeleteCarThunk, GetCarsThunk } from '../../../../redux/reducers/carsSlice'
 import DataTable, { type Column } from '../../../../components/tables/dataTable/DataTable'
 import type { CarData } from '../../../../types/carsTypes'
 import Pagination from '../../../../components/pagination/Pagination'
 import useQueryParams from '../../../../hooks/useQueryParams'
-import SearchInput from '../../../../components/search/searchInput/SearchInput'
+import SearchInput from '../../../../components/filterAndSearch/search/searchInput/SearchInput'
 import useDebounce from '../../../../hooks/useDebounce'
 import Empty from '../../../../components/empty/Empty'
 import FilterSelect from '../../../../components/filterAndSearch/filterSelect/FilterSelect'
-import { GetCarById } from '../../../../api/carsApi'
 
 const CarsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -20,6 +19,18 @@ const CarsSection = () => {
     const debouncedSearch = useDebounce(search)
 
     const totalPages = cars ? Math.ceil(cars?.total / cars?.pageSize) : 0
+
+
+    const handleDelete = async (id: number) => {
+        await dispatch(DeleteCarThunk(id)).unwrap()
+        dispatch(GetCarsThunk({
+            page,
+            search: debouncedSearch,
+            sortBy,
+            sortOrder,
+        }))
+    }
+
     useEffect(() => {
         dispatch(GetCarsThunk({
             page,
@@ -33,7 +44,8 @@ const CarsSection = () => {
 
         {
             header: "ID",
-            key: "id"
+            key: "id",
+            render: (car) => car.id ? `# ${car.id}` : "*"
         },
         {
             header: "Brand",
@@ -50,7 +62,21 @@ const CarsSection = () => {
         {
             header: "Year",
             key: "manufactureYear"
-        }
+        },
+        {
+            header: "Color",
+            key: "colorName"
+        },
+        {
+            header: "Fuel level",
+            key: "fuelLevel",
+            render: (car) => car.fuelLevel ? `${car.fuelLevel.toFixed(2)}` : "fuel level"
+        },
+        {
+            header: "Active",
+            key: "fuelLevel",
+            render: (car) => car.isActive ? "Yes" : "No"
+        },
     ]
 
     const filterOptions = [
@@ -76,8 +102,6 @@ const CarsSection = () => {
         }
     ]
 
-    GetCarById(40)
-
     const sortOrderOptions = [
         {
             label: "Ascending",
@@ -94,32 +118,34 @@ const CarsSection = () => {
         <>
             <div className={styles.carsSection}>
                 <div className={styles.carsContainer}>
+                    <div className={styles.carFilters}>
+                        <FilterSelect
+                            value={sortBy}
+                            options={filterOptions}
+                            onChange={(newSortBy) => setSort(newSortBy, sortOrder)}
+                            title='Sort by'
+                        />
 
-                    <FilterSelect
-                        value={sortBy}
-                        options={filterOptions}
-                        onChange={(newSortBy) => setSort(newSortBy, sortOrder)} 
-                        title='Sort by'
-                    />
+                        <FilterSelect
+                            value={sortOrder}
+                            options={sortOrderOptions}
+                            title="Sort Order"
+                            onChange={(newSortOrder) => setSort(sortBy, newSortOrder as "asc" | "desc")}
+                        />
+                        <SearchInput
+                            search={search}
+                            setSearch={setSearch}
+                            placeholder='Search Cars'
+                        />
+                    </div>
 
-                    <FilterSelect 
-                    value={sortOrder}
-                    options={sortOrderOptions}
-                    title="Sort Order"
-                    onChange={(newSortOrder) => setSort(sortBy, newSortOrder as "asc" | "desc")}
-                    /> 
-
-                    <SearchInput
-                        search={search}
-                        setSearch={setSearch}
-                        placeholder='Search Cars'
-                    />
                     {
                         cars.total !== 0 ? <><DataTable
                             data={cars.data}
                             columns={columns}
                             getRowKey={(car) => car.id}
-                            detailPath = {(car) => `/cars/${car.id}`}
+                            detailPath={(car) => `/cars/${car.id}`}
+                            onDelete={(car) => handleDelete(car.id)}
                         />
                             <Pagination
                                 currentPage={page}

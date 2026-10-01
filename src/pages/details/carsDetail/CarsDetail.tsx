@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { type AppDispatch, type RootState } from "../../../redux/store"
 import { useEffect } from "react"
 import { GetCarByIdThunk } from "../../../redux/reducers/carsSlice"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 const CarsDetail = () => {
     //id ye gore melumatlar cekilecek tariflerde api varsa
 
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
     const { id } = useParams()
     const carId = Number(id)
 
@@ -19,18 +20,26 @@ const CarsDetail = () => {
     }, [])
 
     console.log(car);
-    
+
     return (
         <>
             <div className={styles.carDetailPage}>
                 <div className={styles.carDetailContainer}>
+                    <div className={styles.carDetailActions}>
+                        <button
+                            className={styles.editButton}
+                            onClick={() => navigate(`/cars/${car?.id}/edit`)}
+                        >
+                            Edit Car
+                        </button>
+                    </div>
                     <div className={styles.Overview}>
                         <div className={styles.carImage}>
                             <img src={car?.imageUrl} alt={car?.brandName} />
                         </div>
                         <div className={styles.Summary}>
                             <h2>{car?.brandName} {car?.modelName} <span>{car?.bodyType}</span></h2>
-                            <span>Price: {car?.price}</span>
+                            <span>Price: {car?.price} AED</span>
                             <div className={styles.specifications}>
                                 <h3>Spesifications</h3>
                                 <div className={styles.spesificationsContainer}>
@@ -84,7 +93,7 @@ const CarsDetail = () => {
                                 <span>Engine Unit: {car?.engineUnit}</span>
                                 <span>Engine Volume: {car?.engineVolume}</span>
                                 <span>Max Speed: {car?.maxSpeed} km/h</span>
-                                <span>Distance: {car?.distance} km</span>
+                                <span>Distance: {car?.distance.toFixed(2)} km</span>
                             </div>
                         </div>
 
@@ -94,8 +103,8 @@ const CarsDetail = () => {
                                 <span>Fuel Type ID: {car?.fuelTypeId}</span>
                                 <span>Fuel Type: {car?.fuelType}</span>
                                 <span>Fuel Type Name: {car?.fuelTypeName}</span>
-                                <span>Fuel Level: {car?.fuelLevel}%</span>
-                                <span>Fuel Percentage: {car?.fuelPercentage}%</span>
+                                <span>Fuel Level: {car?.fuelLevel.toFixed(2)}%</span>
+                                <span>Fuel Percentage: {car?.fuelPercentage.toFixed(2)}%</span>
                                 <span>Fuel Tank Capacity: {car?.fuelTankCapacity}</span>
                                 <span>Free Fuel: {car?.freeFuel ? "Yes" : "No"}</span>
                             </div>
@@ -131,7 +140,7 @@ const CarsDetail = () => {
                                             >
                                                 <span>ID: {feature.id}</span>
                                                 <span>Name: {feature.name}</span>
-                                                <span>Icon: {feature.icon || "No icon"}</span>
+                                                {feature.icon && <span>Icon: {feature.icon}</span>}
                                             </div>
                                         ))
                                     ) : (
@@ -146,7 +155,7 @@ const CarsDetail = () => {
                             <div className={styles.detailGroupContainer}>
                                 <span>IMEI: {car?.imei}</span>
                                 <span>
-                                    TARS Vehicle DID: {car?.tarsVehicleDid || "Not connected"}
+                                    TARS Vehicle DID: {car?.tarsVehicleDid || "Not connected="}
                                 </span>
                             </div>
                         </div>

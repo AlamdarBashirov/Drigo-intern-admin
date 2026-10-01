@@ -17,13 +17,14 @@ type DataTableProps<T> = {
     data: T[];
     columns: Column<T>[];
     getRowKey: (item: T) => string | number;
-    detailPath? :(item: T) => string
+    detailPath?: (item: T) => string,
+    onDelete?: (item: T) => void;
 };
 
-const DataTable = <T,>({ data, columns, detailPath,getRowKey }: DataTableProps<T>) => {
+const DataTable = <T,>({ data, columns, detailPath, getRowKey, onDelete }: DataTableProps<T>) => {
     const navigate = useNavigate()
     return (
-        <table>
+        <table className={styles.dataTable}>
             <thead>
                 <tr>
                     {
@@ -33,7 +34,7 @@ const DataTable = <T,>({ data, columns, detailPath,getRowKey }: DataTableProps<T
                             </>
                         ))
                     }
-                    <th>Actions</th>
+                    {(detailPath || onDelete) && <th>Actions</th>}
                 </tr>
             </thead>
 
@@ -47,9 +48,29 @@ const DataTable = <T,>({ data, columns, detailPath,getRowKey }: DataTableProps<T
                                     ? <td key={String(c.key)}>{c.render(item)}</td>
                                     : <td key={String(c.key)}>{String(item[c.key])}</td>
                             ))}
-                            <td>
-                                <button onClick={() => detailPath && navigate(detailPath(item))}>Details</button>
-                            </td>
+                            {(detailPath || onDelete) && (
+                                <td>
+                                    <div className={styles.actions}>
+                                        {detailPath && (
+                                            <button
+                                                className={styles.detailBtn}
+                                                onClick={() => navigate(detailPath(item))}
+                                            >
+                                                Details
+                                            </button>
+                                        )}
+
+                                        {onDelete && (
+                                            <button
+                                                className={styles.deleteBtn}
+                                                onClick={() => onDelete(item)}
+                                            >
+                                                Delete
+                                            </button>
+                                        )}
+                                    </div>
+                                </td>
+                            )}
                         </tr>
                     ))
                 }

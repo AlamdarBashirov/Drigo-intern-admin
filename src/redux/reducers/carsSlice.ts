@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AddCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels, UpdateCar } from "../../api/carsApi";
+import { AddCar, DeleteCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels, UpdateCar } from "../../api/carsApi";
 import type { CarsQueryParams, CarsState, CreateCarData, UpdateCarData } from "../../types/carsTypes";
 import apiClient from "../../api/apiClient";
 
@@ -20,6 +20,11 @@ export const AddCarThunk = createAsyncThunk("cars/create-car", async (data: Crea
 
 export const UpdateCarThunk = createAsyncThunk("cars/update-car", async ({ id, data }: { id: number, data: UpdateCarData }) => {
     const res = await UpdateCar(id, data)
+    return res
+})
+
+export const DeleteCarThunk = createAsyncThunk("cars/delete-car", async (id: number) => {
+    const res = await DeleteCar(id)
     return res
 })
 
@@ -112,6 +117,35 @@ export const carsSlice = createSlice({
             .addCase(AddCarThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || "Adding car Error"
+            })
+
+            //update car thunk
+            .addCase(UpdateCarThunk.fulfilled, (state, action) => {
+                state.loading = false
+                state.error = null
+                state.car = action.payload
+            })
+            .addCase(UpdateCarThunk.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(UpdateCarThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || "Updating car error"
+            })
+
+            //delete car thunk
+            .addCase(DeleteCarThunk.fulfilled, (state) => {
+                state.loading = false
+                state.error = null
+            })
+            .addCase(DeleteCarThunk.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(DeleteCarThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || "Deleting car error"
             })
 
             //get brands

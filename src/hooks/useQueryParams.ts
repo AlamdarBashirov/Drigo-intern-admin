@@ -7,7 +7,7 @@ const useQueryParams = () => {
     const search = searchParams.get("search") || ""
 
     const sortBy = searchParams.get("sortBy") || ""
-    const sortOrder = (searchParams.get("sortOrder") || "desc") as "asc" | "desc"    
+    const sortOrder = (searchParams.get("sortOrder") || "") as "asc" | "desc"    
     const setPage = (newPage: number) => {
         if(newPage === 1) {
             searchParams.delete("page")

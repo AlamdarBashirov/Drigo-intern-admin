@@ -1,0 +1,75 @@
+@use '../../../styles/variables' as*;
+
+.dataTable {
+    width: 100%;
+    border: 1px solid $border-color;
+    border-radius: $radius-lg;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background-color: $bg-surface;
+
+    td {
+        padding: $spacing-sm;
+        border-bottom: 1px solid $border-color;
+    }
+
+    thead {
+        tr {
+            th {
+                padding: $spacing-sm;
+                text-align: start;
+                border-bottom: 1px solid $border-color;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                background-color: $bg-primary;
+                color: $text-on-primary;
+
+                .detailBtn {
+                    border-color: $text-on-primary;
+                    color: $text-on-primary;
+                }
+                .deleteBtn {
+                    color: $text-on-primary;
+                }
+            }
+
+            .detailBtn {
+                padding: $spacing-xs $spacing-sm;
+                border: 2px solid $bg-primary;
+                border-radius: $radius-md;
+                background-color: transparent;
+                color: $text-primary;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin: 5px;
+                &:hover {
+                    background-color: $bg-primary;
+                    color: $text-on-primary;
+                }
+            }
+
+            .deleteBtn {
+                padding: $spacing-xs $spacing-sm;
+                border: 2px solid $color-error;
+                border-radius: $radius-md;
+                background-color: transparent;
+                color: $text-primary;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background-color: $color-error;
+                    color: $text-on-primary;
+                }
+            }
+        }
+    }
+}

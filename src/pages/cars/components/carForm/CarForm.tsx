@@ -1,17 +1,10 @@
-import { useFormik } from 'formik';
-
 import styles from './CarForm.module.scss'
-
+import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-
 import type { AppDispatch, RootState } from '../../../../redux/store';
-
 import { useEffect } from 'react';
-
 import { GetBrandColorsThunk, GetBrandsThunk, GetCarFeaturesThunk, GetCitiesThunk, GetFuelTypesThunk, GetModelsThunk } from '../../../../redux/reducers/carsSlice';
-
 import type { CarFormData } from '../../../../types/carsTypes';
-
 
 type CarFormProps = {
     initialValues: CarFormData
@@ -20,13 +13,10 @@ type CarFormProps = {
     mode: "add" | "edit"
 }
 
-
 const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) => {
 
     const dispatch = useDispatch<AppDispatch>()
-
     const { brands, colors, cities, fuelTypes, carFeatures, models } = useSelector((state: RootState) => state.cars)
-
 
     useEffect(() => {
         dispatch(GetBrandsThunk())
@@ -38,13 +28,11 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
         }
     }, [dispatch, mode])
 
-
     const formik = useFormik<CarFormData>({
         initialValues,
         enableReinitialize: true,
         onSubmit
     })
-
 
     useEffect(() => {
         if (formik.values.brandId) {
@@ -53,10 +41,9 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
         }
     }, [formik.values.brandId, dispatch])
 
-
     return (
-        <div>
-            <div>
+        <div className={styles.carsForm}>
+            <div className={styles.carsFormContainer}>
                 <form onSubmit={formik.handleSubmit}>
                     <div className={styles.carFormGroup}>
                         <label htmlFor="brandId">Brand</label>
@@ -280,33 +267,6 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
                                     value={formik.values.address}
                                 />
                             </div>
-
-                            <div className={styles.carFormGroup}>
-                                <label>Car Features</label>
-                                {carFeatures.map((feature) => (
-                                    <div key={feature.id}>
-                                        <input
-                                            id={`feature-${feature.id}`}
-                                            type="checkbox"
-                                            checked={formik.values.carFeatureIds?.includes(feature.id)}
-                                            onChange={(e) => {
-                                                const current = formik.values.carFeatureIds || []
-
-                                                formik.setFieldValue(
-                                                    "carFeatureIds",
-                                                    e.target.checked
-                                                        ? [...current, feature.id]
-                                                        : current.filter((id) => id !== feature.id)
-                                                )
-                                            }}
-                                        />
-                                        <label htmlFor={`feature-${feature.id}`}>
-                                            {feature.name}
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-
                             <div className={styles.carFormGroup}>
                                 <label htmlFor="count">Count</label>
                                 <input
@@ -319,6 +279,36 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
                                     value={formik.values.count}
                                 />
                             </div>
+                            <div className={`${styles.carFormGroup} ${styles.featuresGroup}`}>
+                                <label>Car Features</label>
+                                <div className={styles.featuresList}>
+                                    {carFeatures.map((feature) => (
+                                        <div key={feature.id} className={styles.featureItem}>
+                                            <input
+                                                id={`feature-${feature.id}`}
+                                                type="checkbox"
+                                                checked={formik.values.carFeatureIds?.includes(feature.id)}
+                                                onChange={(e) => {
+                                                    const current = formik.values.carFeatureIds || []
+
+                                                    formik.setFieldValue(
+                                                        "carFeatureIds",
+                                                        e.target.checked
+                                                            ? [...current, feature.id]
+                                                            : current.filter((id) => id !== feature.id)
+                                                    )
+                                                }}
+                                            />
+                                            <label htmlFor={`feature-${feature.id}`}>
+                                                {feature.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+
+                            </div>
+
+
                         </>
                     )}
 
@@ -335,7 +325,7 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
                                 />
                             </div>
 
-                            <div className={styles.carFormGroup}>
+                            <div className={`${styles.carFormGroup} ${styles.checkboxGroup}`} >
                                 <label htmlFor="freeInsurance">Free Insurance</label>
                                 <input
                                     id="freeInsurance"
@@ -348,7 +338,7 @@ const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) =>
                         </>
                     )}
 
-                    <button type="submit">{buttonText}</button>
+                    <button type="submit" className={styles.submitButton}>{buttonText}</button>
                 </form>
             </div>
         </div>

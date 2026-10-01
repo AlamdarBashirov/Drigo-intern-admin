@@ -26,6 +26,11 @@ export const UpdateCar = async (id: number, data: UpdateCarData) => {
     return response.data
 }
 
+//delete car 
+export const DeleteCar = async (id: number) => {
+    const response = await apiClient.delete(`api/admin/cars/${id}`)
+    return response.data
+}
 
 //get brands
 export const GetBrands = async() => {
