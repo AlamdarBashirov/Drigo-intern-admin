@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AddCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels } from "../../api/carsApi";
-import type { CarsQueryParams, CarsState, CreateCarData } from "../../types/carsTypes";
+import { AddCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels, UpdateCar } from "../../api/carsApi";
+import type { CarsQueryParams, CarsState, CreateCarData, UpdateCarData } from "../../types/carsTypes";
 import apiClient from "../../api/apiClient";
 
 export const GetCarsThunk = createAsyncThunk("cars/get-cars", async (params: CarsQueryParams) => {
@@ -15,6 +15,11 @@ export const GetCarByIdThunk = createAsyncThunk("cars/get-by-id", async (id: num
 
 export const AddCarThunk = createAsyncThunk("cars/create-car", async (data: CreateCarData) => {
     const res = await AddCar(data)
+    return res
+})
+
+export const UpdateCarThunk = createAsyncThunk("cars/update-car", async ({ id, data }: { id: number, data: UpdateCarData }) => {
+    const res = await UpdateCar(id, data)
     return res
 })
 

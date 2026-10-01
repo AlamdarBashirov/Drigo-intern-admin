@@ -1,61 +1,58 @@
 import { useFormik } from 'formik';
+
 import styles from './CarForm.module.scss'
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import type { AppDispatch, RootState } from '../../../../redux/store';
+
 import { useEffect } from 'react';
-import { AddCarThunk, GetBrandColorsThunk, GetBrandsThunk, GetCarFeaturesThunk, GetCitiesThunk, GetFuelTypesThunk, GetModelsThunk } from '../../../../redux/reducers/carsSlice';
-import type { CreateCarData } from '../../../../types/carsTypes';
-import { useNavigate } from 'react-router-dom';
-const CarForm = () => {
+
+import { GetBrandColorsThunk, GetBrandsThunk, GetCarFeaturesThunk, GetCitiesThunk, GetFuelTypesThunk, GetModelsThunk } from '../../../../redux/reducers/carsSlice';
+
+import type { CarFormData } from '../../../../types/carsTypes';
+
+
+type CarFormProps = {
+    initialValues: CarFormData
+    onSubmit: (values: CarFormData) => void | Promise<void>
+    buttonText: string
+    mode: "add" | "edit"
+}
+
+
+const CarForm = ({ initialValues, onSubmit, buttonText, mode }: CarFormProps) => {
 
     const dispatch = useDispatch<AppDispatch>()
-    const navigate = useNavigate()
+
     const { brands, colors, cities, fuelTypes, carFeatures, models } = useSelector((state: RootState) => state.cars)
+
 
     useEffect(() => {
         dispatch(GetBrandsThunk())
         dispatch(GetFuelTypesThunk())
-        dispatch(GetCitiesThunk())
-        dispatch(GetCarFeaturesThunk())
-    }, [])
 
-
-
-    const formik = useFormik<CreateCarData>({
-        initialValues: {
-            brandId: 0,
-            modelId: undefined,
-            colorId: undefined,
-            fuelTypeId: undefined,
-            manufactureYear: undefined,
-            engineCapacity: undefined,
-            engineUnit: "",
-            transmission: 0,
-            maxSpeed: undefined,
-            distance: undefined,
-            plateNumber: "",
-            chassisNumber: "",
-            imei: "",
-            latitude: undefined,
-            longitude: undefined,
-            address: "",
-            city: "",
-            carFeatureIds: [],
-            count: 1
-        },
-        onSubmit: async (values) => {
-            // alert(JSON.stringify(values, null, 2));
-            await dispatch(AddCarThunk(values)).unwrap()
-            navigate("/cars")
+        if (mode === "add") {
+            dispatch(GetCitiesThunk())
+            dispatch(GetCarFeaturesThunk())
         }
+    }, [dispatch, mode])
+
+
+    const formik = useFormik<CarFormData>({
+        initialValues,
+        enableReinitialize: true,
+        onSubmit
     })
+
 
     useEffect(() => {
         if (formik.values.brandId) {
             dispatch(GetModelsThunk(formik.values.brandId))
             dispatch(GetBrandColorsThunk(formik.values.brandId))
         }
-    }, [formik.values.brandId])
+    }, [formik.values.brandId, dispatch])
+
 
     return (
         <div>
@@ -142,22 +139,24 @@ const CarForm = () => {
                         </select>
                     </div>
 
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="city">City</label>
-                        <select
-                            id="city"
-                            name="city"
-                            onChange={formik.handleChange}
-                            value={formik.values.city}
-                        >
-                            <option value="">Select City</option>
-                            {cities.map((city) => (
-                                <option key={city.id} value={city.name}>
-                                    {city.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    {mode === "add" && (
+                        <div className={styles.carFormGroup}>
+                            <label htmlFor="city">City</label>
+                            <select
+                                id="city"
+                                name="city"
+                                onChange={formik.handleChange}
+                                value={formik.values.city}
+                            >
+                                <option value="">Select City</option>
+                                {cities.map((city) => (
+                                    <option key={city.id} value={city.name}>
+                                        {city.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
 
                     <div className={styles.carFormGroup}>
                         <label htmlFor="manufactureYear">Manufacture Year</label>
@@ -236,94 +235,125 @@ const CarForm = () => {
                         />
                     </div>
 
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="imei">IMEI</label>
-                        <input
-                            id="imei"
-                            name="imei"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.imei}
-                        />
-                    </div>
-
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="latitude">Latitude</label>
-                        <input
-                            id="latitude"
-                            name="latitude"
-                            type="number"
-                            onChange={formik.handleChange}
-                            value={formik.values.latitude}
-                        />
-                    </div>
-
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="longitude">Longitude</label>
-                        <input
-                            id="longitude"
-                            name="longitude"
-                            type="number"
-                            onChange={formik.handleChange}
-                            value={formik.values.longitude}
-                        />
-                    </div>
-
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="address">Address</label>
-                        <input
-                            id="address"
-                            name="address"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.address}
-                        />
-                    </div>
-
-                    <div className={styles.carFormGroup}>
-                        <label>Car Features</label>
-                        {carFeatures.map((feature) => (
-                            <div key={feature.id}>
+                    {mode === "add" && (
+                        <>
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="imei">IMEI</label>
                                 <input
-                                    id={`feature-${feature.id}`}
-                                    type="checkbox"
-                                    checked={formik.values.carFeatureIds?.includes(feature.id)}
-                                    onChange={(e) => {
-                                        const current = formik.values.carFeatureIds || []
-
-                                        formik.setFieldValue(
-                                            "carFeatureIds",
-                                            e.target.checked
-                                                ? [...current, feature.id]
-                                                : current.filter((id) => id !== feature.id)
-                                        )
-                                    }}
+                                    id="imei"
+                                    name="imei"
+                                    type="text"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.imei}
                                 />
-                                <label htmlFor={`feature-${feature.id}`}>
-                                    {feature.name}
-                                </label>
                             </div>
-                        ))}
-                    </div>
 
-                    <div className={styles.carFormGroup}>
-                        <label htmlFor="count">Count</label>
-                        <input
-                            id="count"
-                            name="count"
-                            type="number"
-                            min={1}
-                            max={20}
-                            onChange={formik.handleChange}
-                            value={formik.values.count}
-                        />
-                    </div>
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="latitude">Latitude</label>
+                                <input
+                                    id="latitude"
+                                    name="latitude"
+                                    type="number"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.latitude}
+                                />
+                            </div>
 
-                    <button type="submit">Add Car</button>
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="longitude">Longitude</label>
+                                <input
+                                    id="longitude"
+                                    name="longitude"
+                                    type="number"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.longitude}
+                                />
+                            </div>
+
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="address">Address</label>
+                                <input
+                                    id="address"
+                                    name="address"
+                                    type="text"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.address}
+                                />
+                            </div>
+
+                            <div className={styles.carFormGroup}>
+                                <label>Car Features</label>
+                                {carFeatures.map((feature) => (
+                                    <div key={feature.id}>
+                                        <input
+                                            id={`feature-${feature.id}`}
+                                            type="checkbox"
+                                            checked={formik.values.carFeatureIds?.includes(feature.id)}
+                                            onChange={(e) => {
+                                                const current = formik.values.carFeatureIds || []
+
+                                                formik.setFieldValue(
+                                                    "carFeatureIds",
+                                                    e.target.checked
+                                                        ? [...current, feature.id]
+                                                        : current.filter((id) => id !== feature.id)
+                                                )
+                                            }}
+                                        />
+                                        <label htmlFor={`feature-${feature.id}`}>
+                                            {feature.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="count">Count</label>
+                                <input
+                                    id="count"
+                                    name="count"
+                                    type="number"
+                                    min={1}
+                                    max={20}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.count}
+                                />
+                            </div>
+                        </>
+                    )}
+
+                    {mode === "edit" && (
+                        <>
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="fuelTankCapacity">Fuel Tank Capacity</label>
+                                <input
+                                    id="fuelTankCapacity"
+                                    name="fuelTankCapacity"
+                                    type="number"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.fuelTankCapacity}
+                                />
+                            </div>
+
+                            <div className={styles.carFormGroup}>
+                                <label htmlFor="freeInsurance">Free Insurance</label>
+                                <input
+                                    id="freeInsurance"
+                                    name="freeInsurance"
+                                    type="checkbox"
+                                    onChange={formik.handleChange}
+                                    checked={formik.values.freeInsurance}
+                                />
+                            </div>
+                        </>
+                    )}
+
+                    <button type="submit">{buttonText}</button>
                 </form>
             </div>
         </div>
     )
 }
+
 
 export default CarForm

@@ -141,6 +141,30 @@ export type CreateCarData = {
     count?: number
 }
 
+//update car type
+export type UpdateCarData = {
+    brandId?: number
+    modelId?: number
+    colorId?: number
+    fuelTypeId?: number
+    manufactureYear?: number
+    engineCapacity?: number
+    engineUnit?: string
+    distance?: number
+    maxSpeed?: number
+    transmission?: number
+    plateNumber?: string
+    chassisNumber?: string
+    freeInsurance?: boolean
+    fuelTankCapacity?: number
+}
+
+//car form data (update, add cars)
+export type CarFormData = CreateCarData & {
+    freeInsurance?: boolean
+    fuelTankCapacity?: number
+}
+
 //brands
 export type BrandType = {
     id: number

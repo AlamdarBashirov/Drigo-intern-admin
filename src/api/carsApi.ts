@@ -1,4 +1,4 @@
-import type { CarsQueryParams, CreateCarData } from "../types/carsTypes"
+import type { CarsQueryParams, CreateCarData, UpdateCarData } from "../types/carsTypes"
 import apiClient from "./apiClient"
 
 export const GetCars = async (params: CarsQueryParams) => {
@@ -17,6 +17,12 @@ export const GetCarById = async(id:number | string) => {
 //create car
 export const AddCar = async (data: CreateCarData) => {
     const response = await apiClient.post("api/admin/cars", data)
+    return response.data
+}
+
+//update car
+export const UpdateCar = async (id: number, data: UpdateCarData) => {
+    const response = await apiClient.put(`api/admin/cars/${id}`, data)
     return response.data
 }
 
