@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { AddCar, DeleteCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels, UpdateCar } from "../../api/carsApi";
+import { AddCar, DeleteCar, GetBrandColors, GetBrands, GetCarById, GetCarFeatures, GetCars, GetCities, GetFuelTypes, GetModels, ToggleCarActive, UpdateCar } from "../../api/carsApi";
 import type { CarsQueryParams, CarsState, CreateCarData, UpdateCarData } from "../../types/carsTypes";
 import apiClient from "../../api/apiClient";
 
@@ -25,6 +25,12 @@ export const UpdateCarThunk = createAsyncThunk("cars/update-car", async ({ id, d
 
 export const DeleteCarThunk = createAsyncThunk("cars/delete-car", async (id: number) => {
     const res = await DeleteCar(id)
+    return res
+})
+
+//isActive status toggle thunk
+export const ToggleCarActiveThunk = createAsyncThunk("cars/toggle-active", async (id: number) => {
+    const res = await ToggleCarActive(id)
     return res
 })
 
@@ -146,6 +152,20 @@ export const carsSlice = createSlice({
             .addCase(DeleteCarThunk.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.error.message || "Deleting car error"
+            })
+
+            //is active status toggle
+            .addCase(ToggleCarActiveThunk.fulfilled, (state) => {
+                state.loading = false
+                state.error = null
+            })
+            .addCase(ToggleCarActiveThunk.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(ToggleCarActiveThunk.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.error.message || "Changing car status error"
             })
 
             //get brands

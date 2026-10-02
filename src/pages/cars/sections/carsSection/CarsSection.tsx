@@ -2,7 +2,7 @@ import styles from './CarsSection.module.scss'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../../../redux/store'
-import { DeleteCarThunk, GetCarsThunk } from '../../../../redux/reducers/carsSlice'
+import { DeleteCarThunk, GetCarsThunk, ToggleCarActiveThunk } from '../../../../redux/reducers/carsSlice'
 import DataTable, { type Column } from '../../../../components/tables/dataTable/DataTable'
 import type { CarData } from '../../../../types/carsTypes'
 import Pagination from '../../../../components/pagination/Pagination'
@@ -23,6 +23,16 @@ const CarsSection = () => {
 
     const handleDelete = async (id: number) => {
         await dispatch(DeleteCarThunk(id)).unwrap()
+        dispatch(GetCarsThunk({
+            page,
+            search: debouncedSearch,
+            sortBy,
+            sortOrder,
+        }))
+    }
+
+    const handleToggleActive = async (id: number) => {
+        await dispatch(ToggleCarActiveThunk(id)).unwrap()
         dispatch(GetCarsThunk({
             page,
             search: debouncedSearch,
@@ -73,9 +83,18 @@ const CarsSection = () => {
             render: (car) => car.fuelLevel ? `${car.fuelLevel.toFixed(2)}` : "fuel level"
         },
         {
-            header: "Active",
-            key: "fuelLevel",
-            render: (car) => car.isActive ? "Yes" : "No"
+            header: "Status",
+            key: "isActive",
+            render: (car) => (
+                <select
+                    className={`${styles.statusSelect} ${car.isActive ? styles.active : styles.inactive}`}
+                    value={car.isActive ? "active" : "inactive"}
+                    onChange={() => handleToggleActive(car.id)}
+                >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            )
         },
     ]
 

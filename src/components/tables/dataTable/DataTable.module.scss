@@ -27,7 +27,7 @@
     tbody {
         tr {
             &:hover {
-                background-color: $bg-primary;
+                background-color: $color-warning;
                 color: $text-on-primary;
 
                 .detailBtn {

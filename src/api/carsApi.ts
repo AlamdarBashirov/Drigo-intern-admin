@@ -32,6 +32,12 @@ export const DeleteCar = async (id: number) => {
     return response.data
 }
 
+//isActive status (true, false)
+export const ToggleCarActive = async (id: number) => {
+    const response = await apiClient.get(`api/admin/cars/${id}/toggle-active`)
+    return response.data
+}
+
 //get brands
 export const GetBrands = async() => {
     const response = await apiClient.get("api/admin/brands")
