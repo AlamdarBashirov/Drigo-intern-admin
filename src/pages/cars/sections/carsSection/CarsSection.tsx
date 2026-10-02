@@ -11,8 +11,10 @@ import SearchInput from '../../../../components/filterAndSearch/search/searchInp
 import useDebounce from '../../../../hooks/useDebounce'
 import Empty from '../../../../components/empty/Empty'
 import FilterSelect from '../../../../components/filterAndSearch/filterSelect/FilterSelect'
+import { useNavigate } from 'react-router-dom'
 
 const CarsSection = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const { cars } = useSelector((state: RootState) => state.cars)
     const { page, setPage, search, setSearch, sortBy, sortOrder, setSort } = useQueryParams()
@@ -156,6 +158,9 @@ const CarsSection = () => {
                             setSearch={setSearch}
                             placeholder='Search Cars'
                         />
+
+                        <button className={styles.addCarBtn} onClick={() => navigate("/cars/add")}>Add Car</button>
+
                     </div>
 
                     {

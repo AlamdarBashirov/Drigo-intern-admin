@@ -20,6 +20,27 @@
             justify-content: start;
             gap: $spacing-md;
             flex-wrap: wrap;
+
+            .addCarBtn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: $spacing-sm $spacing-md;
+                border: 2px solid $border-color-focus;
+                border-radius: $radius-md;
+                background-color: $bg-surface;
+                box-shadow: $shadow-md;
+                cursor: pointer;
+                color: $text-brand;
+                font-weight: 600;
+                transition: .3s;
+
+                &:hover {
+                    background-color: $bg-primary;
+                    color: $text-on-primary;
+                    transition: .3s;
+                }
+            }
         }
 
         .statusSelect {
@@ -34,10 +55,12 @@
             &:focus {
                 border-color: $border-color-focus;
             }
+
             &.active {
                 border-color: $color-success;
                 color: $color-success;
             }
+
             &.inactive {
                 border-color: $color-error;
                 color: $color-error;

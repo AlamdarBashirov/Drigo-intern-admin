@@ -1,0 +1,177 @@
+@use '../../../../styles/variables' as *;
+
+.carsForm {
+    width: 100%;
+    padding: $spacing-lg 0;
+
+    .carsFormContainer {
+        width: $container-normal-width;
+        margin: 0 auto;
+        padding: $spacing-lg;
+        border: 1px solid $border-color;
+        border-radius: $radius-lg;
+        background-color: $bg-surface;
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: $spacing-md;
+
+            .carFormGroup {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-xs;
+
+                label {
+                    color: $text-secondary;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                input,
+                select {
+                    width: 100%;
+                    padding: $spacing-sm $spacing-md;
+                    border: 1px solid $border-color;
+                    border-radius: $radius-md;
+                    background-color: $bg-surface;
+                    color: $text-primary;
+                    font-size: 14px;
+                    outline: none;
+                    transition: border-color 0.2s;
+
+                    &:focus {
+                        border-color: $border-color-focus;
+                    }
+                }
+
+                select {
+                    cursor: pointer;
+                }
+            }
+
+            .checkboxGroup {
+                flex-direction: row;
+                align-items: center;
+                gap: $spacing-sm;
+
+                label {
+                    color: $text-primary;
+                    cursor: pointer;
+                }
+
+                input[type='checkbox'] {
+                    width: 18px;
+                    height: 18px;
+                    padding: 0;
+                    accent-color: $color-primary;
+                    cursor: pointer;
+                }
+            }
+
+            .featuresGroup {
+                grid-column: 1 / -1;
+                padding: $spacing-md;
+                border: 1px solid $border-color;
+                border-radius: $radius-lg;
+
+                > label {
+                    padding-bottom: $spacing-sm;
+                    border-bottom: 1px solid $border-color;
+                    color: $text-primary;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+
+                .featuresList {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: $spacing-sm;
+                    margin-top: $spacing-sm;
+
+                    .featureItem {
+                        display: flex;
+                        align-items: center;
+                        gap: $spacing-sm;
+                        padding: $spacing-sm;
+                        border: 1px solid $border-color;
+                        border-radius: $radius-md;
+
+                        input[type='checkbox'] {
+                            width: 16px;
+                            height: 16px;
+                            padding: 0;
+                            accent-color: $color-primary;
+                            cursor: pointer;
+                        }
+
+                        label {
+                            color: $text-secondary;
+                            font-size: 14px;
+                            font-weight: 400;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+
+            .submitButton {
+                grid-column: 1 / -1;
+                justify-self: flex-end;
+                padding: $spacing-sm $spacing-lg;
+                border: 1px solid $color-primary;
+                border-radius: $radius-md;
+                background-color: $color-primary;
+                color: $text-on-primary;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background-color 0.2s, color 0.2s;
+
+                &:hover {
+                    background-color: $bg-surface;
+                    color: $text-brand;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-desktop) {
+    .carsForm {
+        .carsFormContainer {
+            form {
+                grid-template-columns: repeat(2, 1fr);
+
+                .featuresGroup {
+                    .featuresList {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .carsForm {
+        padding: $spacing-md 0;
+
+        .carsFormContainer {
+            padding: $spacing-md;
+
+            form {
+                grid-template-columns: 1fr;
+
+                .featuresGroup {
+                    .featuresList {
+                        grid-template-columns: 1fr;
+                    }
+                }
+
+                .submitButton {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
