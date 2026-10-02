@@ -1,0 +1,15 @@
+@use '../../../../styles/variables' as*;
+
+.searchContainer{
+    input{
+        padding: $spacing-sm $spacing-md;
+        width: 300px;
+        outline: none;
+        border: 2px solid $border-color;
+        border-radius: $radius-md;
+        font-weight: 600;
+        &:active, &:focus, &:not(:placeholder-shown) {
+            border-color: $border-color-focus;
+        }
+    }
+}

@@ -17,9 +17,6 @@ const TrendsSection = () => {
 
     if (!trends) return null;
 
-    console.log(trends);
-
-
     return (
         <div className={styles.trendsSection}>
 
