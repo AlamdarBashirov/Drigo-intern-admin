@@ -84,7 +84,7 @@ export const carsSlice = createSlice({
             .addCase(GetCarsThunk.fulfilled, (state, action) => {
                 state.loading = false
                 state.error = null,
-                    state.cars = action.payload
+                state.cars = action.payload
             })
             .addCase(GetCarsThunk.pending, (state) => {
                 state.loading = true

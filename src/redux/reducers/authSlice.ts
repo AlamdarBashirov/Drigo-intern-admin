@@ -39,8 +39,6 @@ export const VerifyOtpThunk = createAsyncThunk("auth/verify", async (data: Verif
 
 export const GetCurrentUserThunk = createAsyncThunk("auth/me", async () => {
     const res = await getCurrentUser()
-    console.log("user", res);
-
     return res
 })
 

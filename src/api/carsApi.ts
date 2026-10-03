@@ -41,47 +41,35 @@ export const ToggleCarActive = async (id: number) => {
 //get brands
 export const GetBrands = async() => {
     const response = await apiClient.get("api/admin/brands")
-    console.log(response.data);
-    
     return response.data
 }
 
 //get models
 export const GetModels = async(brandId: number) => {
     const response = await apiClient.get(`api/admin/brands/${brandId}/models`)
-        console.log(response.data);
-
     return response.data
 }
 
 //get brand colors
 export const GetBrandColors = async(brandId: number) => {
     const response = await apiClient.get(`api/admin/brands/${brandId}/colors`)
-        console.log(response.data);
-
     return response.data
 }
 
 //get fuel type
 export const GetFuelTypes = async() => {
     const response = await apiClient.get(`api/admin/cars/fuel-types`)
-        console.log(response.data);
-
     return response.data
 }
 
 //get cities
 export const GetCities = async() => {
     const response = await apiClient.get(`api/admin/cities`)
-        console.log(response.data);
-
     return response.data
 }
 
 //car features
 export const GetCarFeatures = async() => {
     const response = await apiClient.get(`api/admin/cars/car-features`)
-        console.log(response.data);
-
     return response.data
 }
