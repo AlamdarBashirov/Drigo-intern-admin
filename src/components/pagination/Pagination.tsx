@@ -39,10 +39,30 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
             <div className={styles.paginationContainer}>
                 <button onClick={GoPrevius} disabled={currentPage === 1}>Previus</button>
                 {
-                    pageButtons && pageButtons.map(pageNumber => (
-                        <button className={currentPage === pageNumber ? styles.activePage : ""} key={pageNumber} onClick={() => GoToPage(Number(pageNumber))}>{pageNumber}</button>
-                    ))
+    pageButtons.map((pageNumber, index) => {
+        if (pageNumber === "...") {
+            return (
+                <span key={`ellipsis-${index}`}>
+                    ...
+                </span>
+            )
+        }
+
+        return (
+            <button
+                className={
+                    currentPage === pageNumber
+                        ? styles.activePage
+                        : ""
                 }
+                key={pageNumber}
+                onClick={() => GoToPage(pageNumber)}
+            >
+                {pageNumber}
+            </button>
+        )
+    })
+}
                 <button onClick={GoNext} disabled={currentPage === totalPages}>Next</button>
             </div>
         </div>
