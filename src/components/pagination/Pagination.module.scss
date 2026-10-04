@@ -3,12 +3,13 @@
 .pagination {
     width: 100%;
     margin-top: $spacing-md;
+
     .paginationContainer {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: $spacing-sm;
-        
+
         button {
             background-color: $bg-surface;
             box-shadow: $shadow-md;
@@ -21,14 +22,21 @@
             color: $text-secondary;
             cursor: pointer;
             transition: all 0.2s ease;
+
             &:hover {
                 border-color: $border-color-focus;
                 color: $text-brand;
                 box-shadow: $shadow-sm;
             }
+
             &:disabled {
                 opacity: 0.4;
                 cursor: not-allowed;
+            }
+
+            &.activePage {
+                border-color: $border-color-focus;
+                font-weight: 600;
             }
         }
     }
