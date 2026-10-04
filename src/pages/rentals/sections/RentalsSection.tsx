@@ -4,23 +4,28 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../../redux/store'
 import { useEffect } from 'react'
 import { GetRentalsThunk } from '../../../redux/reducers/rentalsSlice'
-import type { RentalData } from '../../../types/rentalsTypes'
+import { rentalStatuses, type RentalData, type RentalStatus } from '../../../types/rentalsTypes'
 import useQueryParams from '../../../hooks/useQueryParams'
 import Error from '../../../components/error/Error'
 import Pagination from '../../../components/pagination/Pagination'
+import FilterSelect from '../../../components/filterAndSearch/filterSelect/FilterSelect'
 const RentalsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { rentals, error, loading } = useSelector((state: RootState) => state.rentals)
-    const { page, setPage } = useQueryParams()
+    const { page, setPage, status, setStatus, sortBy, sortOrder, setSort } = useQueryParams()
 
     const totalPages = rentals ? Math.ceil(rentals?.total / rentals?.pageSize) : 0
 
+    const hasStatus: boolean = (rentalStatuses as readonly string[]).includes(status)
 
     useEffect(() => {
         dispatch(GetRentalsThunk({
-            page
+            page,
+            status: hasStatus ? status as RentalStatus : undefined,
+            sortBy,
+            sortOrder
         }))
-    }, [page])
+    }, [page, status, sortBy, sortOrder])
 
     const columns: Column<RentalData>[] = [
         {
@@ -31,7 +36,7 @@ const RentalsSection = () => {
         {
             header: "Car",
             key: "car",
-            render: (rental) => rental?.car ? `${rental.car.brand} ${rental.car.model}` : "*"
+            render: (rental) => rental?.car?.id ? `${rental.car?.brand} ${rental.car?.model}` : "*"
         },
         {
             header: "Start Date",
@@ -54,11 +59,90 @@ const RentalsSection = () => {
         },
     ]
 
+    const statusOptions = [
+        {
+            label: "Active",
+            value: "Active"
+        },
+        {
+            label: "Started",
+            value: "Started"
+        },
+        {
+            label: "Completed",
+            value: "Completed"
+        },
+        {
+            label: "PaymentPending",
+            value: "PaymentPending"
+        },
+        {
+            label: "Cancelled",
+            value: "Cancelled"
+        },
+        {
+            label: "Accident",
+            value: "Accident"
+        },
+    ]
+
+    const sortByFilters = [
+        {
+            label: "Start date",
+            value: "startDate"
+        },
+        {
+            label: "End date",
+            value: "endDate"
+        },
+        {
+            label: "Total price",
+            value: "totalPrice"
+        },
+    ]
+
+    const sortOrderOptions = [
+        {
+            label: "Ascending",
+            value: "asc"
+        },
+        {
+            label: "Descending",
+            value: "desc"
+        },
+    ]
+
+    if (!rentals) {
+        return null
+    }
+
     return (
         <div>
             <div>
+
+                <div>
+                    <FilterSelect
+                        value={status}
+                        options={statusOptions}
+                        title='Rental status'
+                        onChange={(newStatus) => setStatus(newStatus)}
+                    />
+                    <FilterSelect
+                        value={sortBy}
+                        options={sortByFilters}
+                        title='Sort by'
+                        onChange={(newSortBy) => setSort(newSortBy, sortOrder)}
+                    />
+                    <FilterSelect
+                        value={sortOrder}
+                        options={sortOrderOptions}
+                        title="Sort Order"
+                        onChange={(newSortOrder) => setSort(sortBy, newSortOrder as "asc" | "desc")}
+                    />
+                </div>
+
                 {
-                    rentals ? <>
+                    rentals?.total !== 0 ? <>
                         <DataTable
                             data={rentals?.data}
                             columns={columns}

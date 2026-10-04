@@ -250,5 +250,5 @@ export type CarsQueryParams = {
     pageSize?: number
     search?: string
     sortBy?: string
-    sortOrder?: "asc" | "desc"
+    sortOrder?: "asc" | "desc" | ""
 }

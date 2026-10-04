@@ -60,7 +60,25 @@ export type RentalState = {
 
 
 
+// query params
+
+export const rentalStatuses = [
+    "Active",
+    "Started",
+    "Completed",
+    "PaymentPending",
+    "Cancelled",
+    "Accident"
+] as const;
+
+export type RentalStatus = typeof rentalStatuses[number];
+
 export type RentalsQueryParams = {
     page?: number,
-    pageSize?: number
+    pageSize?: number,
+    status?: RentalStatus,
+    sortBy?: string,
+    sortOrder?: "asc" | "desc" | "",
+    carId?: number,
+    userId?: number
 }
