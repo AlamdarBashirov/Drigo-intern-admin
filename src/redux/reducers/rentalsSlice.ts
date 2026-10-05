@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetRentals } from "../../api/rentalsApi";
+import { GetRentalById, GetRentals } from "../../api/rentalsApi";
 import type { RentalsQueryParams, RentalState } from "../../types/rentalsTypes";
 
 export const GetRentalsThunk = createAsyncThunk("rentals/get", async(params:RentalsQueryParams) => {
@@ -7,10 +7,16 @@ export const GetRentalsThunk = createAsyncThunk("rentals/get", async(params:Rent
     return res
 })
 
+export const GetRentalByIdThunk = createAsyncThunk("rentals/get-by-id", async(id:number) => {
+    const res = await GetRentalById(id)
+    return res
+})
+
 const initialState:RentalState = {
     loading: false,
     error: null,
-    rentals: null
+    rentals: null,
+    rental: null
 }
 
 export const rentalsSlice = createSlice({
@@ -33,8 +39,22 @@ export const rentalsSlice = createSlice({
     })
     .addCase(GetRentalsThunk.rejected, (state, action) => {
         state.loading = false,
-        state.error = null,
         state.error = action.error.message || "Rentals fetch Error"
+    })
+
+    //get rental by id (detail page)
+    .addCase(GetRentalByIdThunk.fulfilled, (state, action) => {
+        state.loading = false,
+        state.error = null,
+        state.rental = action.payload
+    })
+    .addCase(GetRentalByIdThunk.pending, (state) => {
+        state.loading = true,
+        state.error = null
+    })
+    .addCase(GetRentalByIdThunk.rejected, (state, action) => {
+        state.loading = false,
+        state.error = action.error.message || "Rental by id fetch Error"
     })
 })
 

@@ -19,8 +19,6 @@ const CarsDetail = () => {
         dispatch(GetCarByIdThunk(carId))
     }, [])
 
-    console.log(car);
-
     return (
         <>
             <div className={styles.carDetailPage}>

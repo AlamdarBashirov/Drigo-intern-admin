@@ -9,6 +9,7 @@ import useQueryParams from '../../../hooks/useQueryParams'
 import Error from '../../../components/error/Error'
 import Pagination from '../../../components/pagination/Pagination'
 import FilterSelect from '../../../components/filterAndSearch/filterSelect/FilterSelect'
+import { GetRentalById } from '../../../api/rentalsApi'
 const RentalsSection = () => {
     const dispatch = useDispatch<AppDispatch>()
     const { rentals, error, loading } = useSelector((state: RootState) => state.rentals)

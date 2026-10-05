@@ -10,6 +10,7 @@ import CarsDetail from "../pages/details/carsDetail/CarsDetail"
 import AddCars from "../pages/cars/addCars/AddCars"
 import EditCars from "../pages/cars/editCars/EditCars"
 import Rentals from "../pages/rentals/Rentals"
+import RentalDetails from "../pages/details/rentalsDetail/RentalDetails"
 
 const Router = () => {
     return (
@@ -38,6 +39,9 @@ const Router = () => {
                         {/* {Rentals} */}
                         <Route element={<PermissionRoute requiredPermission="rentals.view" />}>
                             <Route path="/rentals" element={<Rentals />} />
+                        </Route>
+                        <Route element={<PermissionRoute requiredPermission="rentals.view" />}>
+                            <Route path="/rentals/:id" element={<RentalDetails />} />
                         </Route>
 
                     </Route>
