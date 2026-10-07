@@ -198,12 +198,33 @@ type DetailRentalDebt = {
     type: string
 }
 
+
+// rental payment types
+
+export type RentalPaymentResponse = {
+    amount: number,
+    createdAt: string,
+    currency: string,
+    failureReason: string | null,
+    id: number,
+    isFinalPayment: boolean,
+    periodEnd: string | null,
+    periodStart: string | null,
+    serviceFee: number,
+    status: string,
+    transactionType: string
+}
+
+
 //for redux 
 export type RentalState = {
     loading: boolean,
     error: string | null,
     rentals: RentalsResponse | null,
-    rental: RentalDetailResponse | null
+    rental: RentalDetailResponse | null,
+    paymentLoading: boolean,
+    paymentError: string | null,
+    rentalPayment: RentalPaymentResponse[] | null
 }
 
 

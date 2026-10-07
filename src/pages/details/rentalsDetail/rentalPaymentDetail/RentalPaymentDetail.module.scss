@@ -1,0 +1,195 @@
+@use '../../../../styles/variables' as*;
+
+.paymentDetailPage {
+    width: 100%;
+    padding: $spacing-lg 0;
+
+    .paymentDetailContainer {
+        width: $container-normal-width;
+        margin: 0 auto;
+
+        .paymentDetailActions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: $spacing-md;
+
+            .backButton {
+                padding: $spacing-sm $spacing-md;
+                border: 1px solid $color-primary;
+                border-radius: $radius-md;
+                background-color: $bg-surface;
+                color: $text-brand;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $color-primary;
+                    color: $text-on-primary;
+                }
+            }
+        }
+
+        .stateMessage {
+            padding: $spacing-lg;
+            border: 1px solid $border-color;
+            border-radius: $radius-lg;
+            background-color: $bg-surface;
+            color: $text-secondary;
+        }
+
+        .Overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: $spacing-lg;
+            padding: $spacing-lg;
+            border: 1px solid $border-color;
+            border-radius: $radius-lg;
+            background-color: $bg-surface;
+
+            .paymentMain {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-md;
+
+                h2 {
+                    margin: 0;
+                    color: $text-primary;
+                }
+
+                > span {
+                    width: fit-content;
+                    padding: $spacing-xs $spacing-sm;
+                    border: 1px solid $color-primary;
+                    border-radius: $radius-md;
+                    color: $text-brand;
+                    font-weight: 500;
+                }
+
+                .mainInformation {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: $spacing-sm;
+
+                    span {
+                        padding: $spacing-sm;
+                        border: 1px solid $border-color;
+                        border-radius: $radius-md;
+                        color: $text-secondary;
+                    }
+                }
+            }
+
+            .Summary {
+                display: flex;
+                flex-direction: column;
+                gap: $spacing-md;
+
+                h3 {
+                    margin: 0;
+                    color: $text-primary;
+                }
+
+                span {
+                    padding: $spacing-sm;
+                    border: 1px solid $border-color;
+                    border-radius: $radius-md;
+                    color: $text-secondary;
+                }
+            }
+        }
+
+        .allDetails {
+            margin-top: $spacing-lg;
+
+            > h3 {
+                margin-bottom: $spacing-md;
+                color: $text-primary;
+            }
+
+            .detailGroup {
+                margin-bottom: $spacing-md;
+                padding: $spacing-lg;
+                border: 1px solid $border-color;
+                border-radius: $radius-lg;
+                background-color: $bg-surface;
+
+                h4 {
+                    margin: 0 0 $spacing-md;
+                    padding-bottom: $spacing-sm;
+                    border-bottom: 1px solid $border-color;
+                    color: $text-primary;
+                }
+
+                .detailGroupContainer {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: $spacing-md;
+
+                    span {
+                        padding: $spacing-sm;
+                        border: 1px solid $border-color;
+                        border-radius: $radius-md;
+                        color: $text-secondary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-desktop) {
+    .paymentDetailPage {
+        .paymentDetailContainer {
+            .allDetails {
+                .detailGroup {
+                    .detailGroupContainer {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .paymentDetailPage {
+        .paymentDetailContainer {
+            .Overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .paymentDetailPage {
+        padding: $spacing-md 0;
+
+        .paymentDetailContainer {
+            .paymentDetailActions {
+                .backButton {
+                    width: 100%;
+                }
+            }
+
+            .Overview {
+                padding: $spacing-md;
+
+                .paymentMain {
+                    .mainInformation {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            }
+
+            .allDetails {
+                .detailGroup {
+                    padding: $spacing-md;
+
+                    .detailGroupContainer {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            }
+        }
+    }
+}

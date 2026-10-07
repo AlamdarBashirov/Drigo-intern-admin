@@ -4,6 +4,7 @@ import type { AppDispatch, RootState } from '../../../redux/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { GetRentalByIdThunk } from '../../../redux/reducers/rentalsSlice'
+import { GetRentalPayment } from '../../../api/rentalsApi'
 
 const RentalDetails = () => {
     const dispatch = useDispatch<AppDispatch>()
