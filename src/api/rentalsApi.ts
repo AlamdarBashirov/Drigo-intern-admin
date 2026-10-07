@@ -19,3 +19,10 @@ export const GetRentalPayment = async(id: number) => {
     const response = await apiClient.get(`/api/admin/rentals/${id}/payments`)
     return response.data
 }
+
+//get rentals route 
+export const GetRentalRoute = async(id: number) => {
+    const response = await apiClient.get(`/api/admin/rentals/${id}/route`)
+    console.log(response.data)
+    return response.data
+}

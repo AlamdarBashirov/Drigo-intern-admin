@@ -215,6 +215,20 @@ export type RentalPaymentResponse = {
     transactionType: string
 }
 
+//rental route response
+
+export type RentalRouteResponse = {
+    coordinates: RentalRouteCoordinates[], 
+    distance: number,
+    rentalId: number
+}
+
+type RentalRouteCoordinates = {
+    at: string,
+    latitude: number,
+    longitude: number
+}
+
 
 //for redux 
 export type RentalState = {
@@ -224,7 +238,10 @@ export type RentalState = {
     rental: RentalDetailResponse | null,
     paymentLoading: boolean,
     paymentError: string | null,
-    rentalPayment: RentalPaymentResponse[] | null
+    rentalPayment: RentalPaymentResponse[] | null,
+    rentalRoute: RentalRouteResponse | null,
+    routeLoading: boolean,
+    routeError: string | null
 }
 
 

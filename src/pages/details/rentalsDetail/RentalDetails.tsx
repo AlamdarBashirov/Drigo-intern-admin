@@ -4,7 +4,7 @@ import type { AppDispatch, RootState } from '../../../redux/store'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { GetRentalByIdThunk } from '../../../redux/reducers/rentalsSlice'
-import { GetRentalPayment } from '../../../api/rentalsApi'
+import { GetRentalPayment, GetRentalRoute } from '../../../api/rentalsApi'
 
 const RentalDetails = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -117,7 +117,7 @@ const RentalDetails = () => {
                         </div>
 
                         <div className={styles.detailGroup}>
-                            <h4>Payment Information</h4>
+                            <h4>Payment Information  <span className={styles.navigateLink} onClick={() => navigate(`/rentals/${rentalId}/payments`)}>View More</span></h4>
                             <div className={styles.detailGroupContainer}>
                                 <span>Total Price: {rental.totalPrice} AED</span>
                                 <span>Total Debt: {rental.totalDebt} AED</span>
@@ -215,7 +215,7 @@ const RentalDetails = () => {
                         </div>
 
                         <div className={styles.locationDetails}>
-                            <h4>Route Information</h4>
+                            <h4>Route Information <span className={styles.navigateLink} onClick={() => navigate(`/rentals/${rentalId}/routes`)}>View More</span></h4>
                             <div className={styles.detailGroupContainer}>
                                 <span>Distance: {rental.route.distance} km</span>
                                 <span>Start Latitude: {rental.route.startLatitude}</span>

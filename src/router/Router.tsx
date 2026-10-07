@@ -12,6 +12,7 @@ import EditCars from "../pages/cars/editCars/EditCars"
 import Rentals from "../pages/rentals/Rentals"
 import RentalDetails from "../pages/details/rentalsDetail/RentalDetails"
 import RentalPaymentDetail from "../pages/details/rentalsDetail/rentalPaymentDetail/RentalPaymentDetail"
+import RentalRoutes from "../pages/details/rentalsDetail/rentalRoutes/RentalRoutes"
 
 const Router = () => {
     return (
@@ -45,7 +46,10 @@ const Router = () => {
                             <Route path="/rentals/:id" element={<RentalDetails />} />
                         </Route>
                         <Route element={<PermissionRoute requiredPermission="rentals.view" />}>
-                            <Route path="/rentals/:id/payment" element={<RentalPaymentDetail />} />
+                            <Route path="/rentals/:id/payments" element={<RentalPaymentDetail />} />
+                        </Route>
+                        <Route element={<PermissionRoute requiredPermission="rentals.view" />}>
+                            <Route path="/rentals/:id/routes" element={<RentalRoutes />} />
                         </Route>
 
                     </Route>

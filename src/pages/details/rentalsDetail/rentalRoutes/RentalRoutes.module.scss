@@ -1,14 +1,14 @@
-@use '../../../styles/variables' as*;
+@use '../../../../styles/variables' as*;
 
-.rentalDetailPage {
+.routeDetailPage {
     width: 100%;
     padding: $spacing-lg 0;
 
-    .rentalDetailContainer {
+    .routeDetailContainer {
         width: $container-normal-width;
         margin: 0 auto;
 
-        .rentalDetailActions {
+        .routeDetailActions {
             display: flex;
             justify-content: flex-end;
             margin-bottom: $spacing-md;
@@ -37,7 +37,7 @@
             border-radius: $radius-lg;
             background-color: $bg-surface;
 
-            .rentalMain {
+            .routeMain {
                 display: flex;
                 flex-direction: column;
                 gap: $spacing-md;
@@ -45,15 +45,6 @@
                 h2 {
                     margin: 0;
                     color: $text-primary;
-                }
-
-                > span {
-                    width: fit-content;
-                    padding: $spacing-xs $spacing-sm;
-                    border: 1px solid $color-primary;
-                    border-radius: $radius-md;
-                    color: $text-brand;
-                    font-weight: 500;
                 }
 
                 .mainInformation {
@@ -97,8 +88,8 @@
                 color: $text-primary;
             }
 
-            .detailGroup,
-            .locationDetails {
+            .locationDetails,
+            .detailGroup {
                 margin-bottom: $spacing-md;
                 padding: $spacing-lg;
                 border: 1px solid $border-color;
@@ -110,74 +101,57 @@
                     padding-bottom: $spacing-sm;
                     border-bottom: 1px solid $border-color;
                     color: $text-primary;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    .navigateLink{
-                        cursor: pointer;
-                        font-weight: 500;
-                        color: $text-brand;
-                        &:hover{
-                            text-decoration: underline;
-                        }
+                }
+            }
+
+            .locationDetails {
+                .mapContainer {
+                    width: 100%;
+                    height: 450px;
+
+                    .map {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: $radius-md;
                     }
                 }
+            }
 
+            .detailGroup {
                 .detailGroupContainer {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     gap: $spacing-md;
 
-                    > span {
+                    span {
                         padding: $spacing-sm;
                         border: 1px solid $border-color;
                         border-radius: $radius-md;
                         color: $text-secondary;
                     }
-
-                    iframe {
-                        grid-column: 1 / -1;
-                        width: 100%;
-                        border: 1px solid $border-color;
-                        border-radius: $radius-md;
-                    }
-
-                    .itemsList {
-                        grid-column: 1 / -1;
-                        display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        gap: $spacing-md;
-
-                        .item {
-                            display: flex;
-                            flex-direction: column;
-                            gap: $spacing-sm;
-                            padding: $spacing-md;
-                            border: 1px solid $border-color;
-                            border-radius: $radius-md;
-
-                            span {
-                                color: $text-secondary;
-                            }
-                        }
-                    }
                 }
 
-                .photosContainer {
+                .coordinatesContainer {
                     display: grid;
-                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-columns: repeat(3, 1fr);
                     gap: $spacing-md;
 
-                    img {
-                        width: 100%;
-                        height: 250px;
-                        object-fit: cover;
+                    .coordinateItem {
+                        display: flex;
+                        flex-direction: column;
+                        gap: $spacing-sm;
+                        padding: $spacing-md;
                         border: 1px solid $border-color;
                         border-radius: $radius-md;
-                    }
 
-                    span {
-                        color: $text-secondary;
+                        h5 {
+                            margin: 0;
+                            color: $text-primary;
+                        }
+
+                        span {
+                            color: $text-secondary;
+                        }
                     }
                 }
             }
@@ -186,12 +160,11 @@
 }
 
 @media (max-width: $breakpoint-desktop) {
-    .rentalDetailPage {
-        .rentalDetailContainer {
+    .routeDetailPage {
+        .routeDetailContainer {
             .allDetails {
-                .detailGroup,
-                .locationDetails {
-                    .detailGroupContainer {
+                .detailGroup {
+                    .coordinatesContainer {
                         grid-template-columns: repeat(2, 1fr);
                     }
                 }
@@ -201,22 +174,15 @@
 }
 
 @media (max-width: $breakpoint-tablet) {
-    .rentalDetailPage {
-        .rentalDetailContainer {
+    .routeDetailPage {
+        .routeDetailContainer {
             .Overview {
                 grid-template-columns: 1fr;
             }
 
             .allDetails {
-                .detailGroup,
-                .locationDetails {
+                .detailGroup {
                     .detailGroupContainer {
-                        .itemsList {
-                            grid-template-columns: 1fr;
-                        }
-                    }
-
-                    .photosContainer {
                         grid-template-columns: 1fr;
                     }
                 }
@@ -226,11 +192,11 @@
 }
 
 @media (max-width: $breakpoint-mobile) {
-    .rentalDetailPage {
+    .routeDetailPage {
         padding: $spacing-md 0;
 
-        .rentalDetailContainer {
-            .rentalDetailActions {
+        .routeDetailContainer {
+            .routeDetailActions {
                 .backButton {
                     width: 100%;
                 }
@@ -239,7 +205,7 @@
             .Overview {
                 padding: $spacing-md;
 
-                .rentalMain {
+                .routeMain {
                     .mainInformation {
                         grid-template-columns: 1fr;
                     }
@@ -247,24 +213,20 @@
             }
 
             .allDetails {
-                .detailGroup,
-                .locationDetails {
+                .locationDetails,
+                .detailGroup {
                     padding: $spacing-md;
+                }
 
-                    .detailGroupContainer {
-                        grid-template-columns: 1fr;
-
-                        .itemsList {
-                            .item {
-                                padding: $spacing-sm;
-                            }
-                        }
+                .locationDetails {
+                    .mapContainer {
+                        height: 300px;
                     }
+                }
 
-                    .photosContainer {
-                        img {
-                            height: 200px;
-                        }
+                .detailGroup {
+                    .coordinatesContainer {
+                        grid-template-columns: 1fr;
                     }
                 }
             }
